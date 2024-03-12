@@ -1,0 +1,24 @@
+[
+	{
+		"title": "Nuevo Prod 0001",
+		"id": 2,
+		"stock": 250,
+		"description": "POSTMANN",
+		"price": 300,
+		"thumbnail": "Ruta Nuevo Prod01",
+		"status": true,
+		"category": "prod",
+		"code": 100
+	},
+	{
+		"title": "Nuevo Prod 0002",
+		"id": 3,
+		"stock": 20,
+		"description": "POSTMAN",
+		"price": 4300,
+		"status": true,
+		"category": "prod",
+		"thumbnail": "Ruta Nuevo Prod02",
+		"code": 300
+	}
+]

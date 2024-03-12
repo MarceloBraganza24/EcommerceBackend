@@ -1,0 +1,38 @@
+<h1 style="display: flex; justify-content: center;">Carrito de compras!</h1>
+<hr>
+{{#if condition}}
+    <div>
+        <h2>El carrito esta vacío. si deseas mirar más productos has click <a href="/products-view">aquí</a></h2>
+    </div>
+{{else}}
+    <div>
+        <h2>Productos</h2>
+        <hr>
+        {{#each productsCart}}
+            <p>Nombre: {{this.product.title}}</p> 
+            <p>Descripción: {{this.product.description}}</p> 
+            <p>Precio: {{this.product.price}}</p> 
+            <p>Cantidad: {{this.quantity}}</p> 
+            <hr>
+        {{/each}}
+        <h3>Saldo total: $ {{balance}}</h3>
+    </div>
+    <button onclick="deleteCart('{{user._id}}')">Vaciar carrito</button>
+    <br>
+    <br>
+    <button onclick="openValidateModal()">Finalizar compra</button>
+    <br>
+    <br>
+    <button onclick="backCatalogue()">Volver al catálogo</button>
+{{/if}}
+<div id="emptyCartModal" style="background-color: lightgreen; display: none; position: fixed; top: 2vh; right: 2vh; padding: 2vh; border: 0.5vh solid black;">
+    <h2>Has eliminado todos los productos del carrito</h2>
+</div>
+<div id="validateCartModal" style="background-color: lightgreen; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 2vh; border: 0.5vh solid black;">
+    <h2>Está seguro que desea finalizar la compra?</h2>
+    <div style="display: flex; align-items: center; justify-content: space-evenly; ">
+        <button onclick="finalizePurchase()">Si</button>
+        <button onclick="backToShoppingCartUser()">No</button>
+    </div>
+</div>
+<script src="/js/shoppingCartUser.js"></script>

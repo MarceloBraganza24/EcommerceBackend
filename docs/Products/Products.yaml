@@ -1,0 +1,230 @@
+paths:
+  /api/products:
+    get:
+      summary: Este servicio obtiene el listado de todos los productos
+      # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos exitosamente de la BDD
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+    post:
+      summary: Este servicio crea un producto
+        # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/createProduct'
+      responses:
+        "200":
+          description: El producto fue creado exitosamente en la BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+  /api/products/{pid}:
+    get:
+      summary: Este servicio obtiene un único producto a partir de su pid (identificador del producto)
+      # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a buscar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: El producto fue obtenido exitosamente de la BDD
+          content:
+            aplication/json:
+              schema:
+                $ref: '#components/schemas/Product'
+        "404":
+          description: El producto no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+    put:
+      summary: Este servicio actualiza el producto a partir de su pid (identificador del producto)
+        # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a actualizar
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: El producto fue actualizado exitosamente de la BDD
+        "404":
+          description: El producto no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+    delete:
+      summary: Este servicio elimina un producto a partir de su pid (identificador del producto)
+        # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a eliminar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: El producto fue eliminado exitosamente de la BDD
+        "404":
+          description: El producto no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+components:
+  schemas:
+    Product:
+      type: Object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por mongodb, es el id del producto
+        title:
+          type: String
+          description: Nombre del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: URL de la imagen del producto
+        status:
+          type: String
+          description: Status del producto
+        category:
+          type: String
+          description: Categoría del producto
+        code:
+          type: String
+          description: Código del producto
+        owner:
+          type: String
+          description: Email del creador del producto
+      example:
+        _id: ObjectId("sdnsdnl.58sd96.soomnd")
+        title: Vino
+        stock: 36
+        description: Vino Tinto
+        price: 2500
+        thumbnail: Ruta Vino Tinto
+        status: true
+        category: Vinos
+        code: 15263s95
+        owner: jg@gmail.com
+  requestBodies:
+    createProduct:
+      type: Object
+      properties:
+        title:
+          type: String
+          description: Nombre del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        category:
+          type: String
+          description: Categoría del producto
+        code:
+          type: String
+          description: Código del producto
+      example:
+        title: Vino
+        stock: 3
+        description: Vino Tinto
+        price: 2500
+        category: Vinos
+        code: 125s3695
+    updateProduct:
+      type: Object
+      properties:
+        title:
+          type: String
+          description: Nombre del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: URL de la imagen del producto
+        status:
+          type: String
+          description: Status del producto
+        category:
+          type: String
+          description: Categoría del producto
+        code:
+          type: String
+          description: Código del producto
+        owner:
+          type: String
+          description: Email del creador del producto
+      example:
+        title: Vino
+        stock: 3
+        description: Vino Tinto
+        price: 2500
+        thumbnail: Ruta Vino Tinto
+        status: true
+        category: Vinos
+        code: 125s3695
+        owner: jg@gmail.com
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

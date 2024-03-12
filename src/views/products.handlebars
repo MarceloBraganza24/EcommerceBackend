@@ -1,0 +1,33 @@
+<div>
+    <h1>Bienvenido {{user.first_name}}!</h1>
+    <h1>Datos del usuario:</h1>
+    <p>Email: {{user.email}}</p>
+    <p>Edad: {{user.age}}</p>
+    <p>Rol: {{user.role}}</p>
+</div>
+<hr>
+<a href="/shopping-cart-user-view" style="text-decoration: none; color: black; font-size: 30px;">Carrito de compras</a>
+<hr>
+<h2>Lista de productos disponibles</h2>
+{{#each products}}
+    <p>Title: {{this.title}}</p> 
+    <p>Description: {{this.description}}</p>
+    <p>Price: {{this.price}}</p>
+    <p>Stock: {{this.stock}}</p>
+    <p>Code: {{this.code}}</p>
+    <p>Category: {{this.category}}</p>
+    <button onclick="addToCart('{{this._id}}')">Add to cart</button>
+    <hr>
+{{/each}}
+{{#if hasPrevPage}}
+    <a href="/products-view?page={{prevPage}}"><button>Anterior</button></a>
+{{/if }}
+{{#if hasNextPage}}
+    <a href="/products-view?page={{nextPage}}"><button>Siguente</button></a>
+{{/if }}
+<br><br>
+<button onclick="logOut()">Cerrar sesión</button>
+<div id="addToCartModal" style="background-color: lightgreen; display: none; position: fixed; top: 2vh; right: 2vh; padding: 2vh; border: 0.5vh solid black;">
+    <h2>Has añadido un producto al carrito</h2>
+</div>
+<script src="/js/products.js"></script>

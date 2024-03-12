@@ -1,0 +1,167 @@
+paths:
+  /api/carts:
+    get:
+      summary: Este servicio obtiene el listado de todos los carritos de compra
+      # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Carts
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Los carritos de compra fueron obtenidos exitosamente de la BDD
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+    post:
+      summary: Este servicio crea un carrito de compra
+        # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Carts
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/createCart'
+      responses:
+        "200":
+          description: El carrito de compra fue creado exitosamente en la BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+  /api/carts/{cid}:
+    get:
+      summary: Este servicio obtiene un único carrito de compra a partir de su cid (identificador del carrito de compra)
+      # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Carts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito de compra a buscar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: El carrito de compra fue obtenido exitosamente de la BDD
+          content:
+            aplication/json:
+              schema:
+                $ref: '#components/schemas/Cart'
+        "404":
+          description: El carrito de compra no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+    put:
+      summary: Este servicio actualiza el carrito de compra a partir de su cid (identificador del carrito de compra)
+        # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Carts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito de compra a actualizar
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateCart'
+      responses:
+        "200":
+          description: El carrito de compra fue actualizado exitosamente de la BDD
+        "404":
+          description: El carrito de compra no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+    delete:
+      summary: Este servicio elimina el carrito de compra a partir de su cid (identificador del carrito de compra)
+        # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Carts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito de compra a eliminar
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: El carrito de compra fue eliminado exitosamente de la BDD
+        "404":
+          description: El carrito de compra no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Este servicio finaliza la compra de un carrito a partir de su cid (identificador del carrito de compra)
+        # El tag es un identificador que indica a donde (el recurso) pertenece el servicio
+      tags:
+        - Carts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: El id del carrito de compra
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: La compra se ha realizado con éxito
+        "404":
+          description: El carrito de compra no fue encontrado en BDD
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo en la conexión
+components:
+  schemas:
+    Cart:
+      type: Object
+      properties:
+        products:
+          type: array
+          description: Arreglo de productos existentes en el carrito de compra
+      example:
+        _id: ObjectId("sdnsdnl.58sd96.soomnd")
+        products: []
+  requestBodies:
+    createCart:
+        type: Object
+        properties:
+          products:
+              type: array
+              description: Arreglo de productos dentro del carrito de compra
+        example:
+          products: []
+    updateCart:
+      type: Object
+      properties:
+        products:
+            type: array
+            description: Arreglo de productos dentro del carrito de compra
+      example:
+        products: []
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

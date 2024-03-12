@@ -1,0 +1,13 @@
+<h3>Usuarios</h3>
+<hr>
+{{#each users}}
+    <p>Nombre: {{this.first_name}}</p> 
+    <p>Email: {{this.email}}</p> 
+    <p>Rol: <input id="roleUser{{this._id}}" type="text" value="{{this.role}}"></p>
+    <p>Ultima conexión: {{this.last_connection}}</p>
+    <button onclick="updateUser('{{this._id}}')">Actualizar</button>
+    <button onclick="deleteUser('{{this._id}}')">Eliminar</button>
+    <br>
+    <hr>
+{{/each}}
+<script src="/js/users.js"></script>
