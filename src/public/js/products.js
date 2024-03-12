@@ -1,6 +1,6 @@
 async function logOut () {
     try {
-        await fetch('http://localhost:8081/api/sessions/logout', { method: 'POST' }).then(()=>{window.location.href = '/login-view'});
+        await fetch('https://ecommercebackend-production-26fb.up.railway.app/api/sessions/logout', { method: 'POST' }).then(()=>{window.location.href = '/login-view'});
     } catch (error) {
         console.error('Error:', error.message);
     }
@@ -19,7 +19,7 @@ function addToCart (pid) {
             },
             quantity: 1
         }
-        fetch(`http://localhost:8081/api/users`, {
+        fetch(`https://ecommercebackend-production-26fb.up.railway.app/api/users`, {
             method: 'PUT',
             body: JSON.stringify(productSend),
             headers: {

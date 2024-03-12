@@ -7,7 +7,7 @@ const deleteCart = (uid) => {
     const obj = {
         uid: uid,
     }
-    fetch('http://localhost:8081/api/users/delete-cart-user', {
+    fetch('https://ecommercebackend-production-26fb.up.railway.app/api/users/delete-cart-user', {
         method: 'DELETE',
         body: JSON.stringify(obj),
         headers: {
@@ -17,7 +17,7 @@ const deleteCart = (uid) => {
 }
 
 const finalizePurchase = () => {
-    fetch('http://localhost:8081/api/users/finalize-purchase', {
+    fetch('https://ecommercebackend-production-26fb.up.railway.app/api/users/finalize-purchase', {
         method: 'POST',
     }).then(() => {window.location.href = '/finalize-purchase-view'})
 }

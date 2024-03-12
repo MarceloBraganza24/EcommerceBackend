@@ -11,7 +11,7 @@ form.addEventListener('submit', evt => {
     const data = new FormData(form);
     const obj = {};
     data.forEach((value, key) => obj[key]=value);
-    fetch('http://localhost:8081/api/sessions/register', {
+    fetch('https://ecommercebackend-production-26fb.up.railway.app/api/sessions/register', {
         method: 'POST',
         body: JSON.stringify(obj),
         headers: {
