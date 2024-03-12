@@ -6,11 +6,11 @@ import { uploader } from "../utils/utils.js";
 export default class UsersRouter extends Router {
     init() {
         this.get('/', [accessRolesEnum.ADMIN], passportStrategiesEnum.JWT, getAll);
-        this.post('/finalize-purchase', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM], passportStrategiesEnum.JWT, finalizePurchase);
-        this.post('/password-link', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM], passportStrategiesEnum.JWT, mailToResetPass);
-        this.post('/new-pass', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM], passportStrategiesEnum.JWT, newPass);
+        this.post('/finalize-purchase', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM, accessRolesEnum.USER], passportStrategiesEnum.JWT, finalizePurchase);
+        this.post('/password-link', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM, accessRolesEnum.USER], passportStrategiesEnum.JWT, mailToResetPass);
+        this.post('/new-pass', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM, accessRolesEnum.USER], passportStrategiesEnum.JWT, newPass);
         this.post('/premium/:uid', [accessRolesEnum.ADMIN], passportStrategiesEnum.JWT, changeRole);
-        this.post('/:uid/documents', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM], passportStrategiesEnum.JWT, uploader.fields(
+        this.post('/:uid/documents', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM, accessRolesEnum.USER], passportStrategiesEnum.JWT, uploader.fields(
             [
                 {name: 'profiles', maxCount: 1},
                 {name: 'products', maxCount: 1},
@@ -19,9 +19,9 @@ export default class UsersRouter extends Router {
                 {name: 'comprobanteDeDomicilio', maxCount: 1},
                 {name: 'comprobanteDeEstadoDeCuenta', maxCount: 1}
             ]), uploadFiles);
-        this.put('/', [accessRolesEnum.ADMIN], passportStrategiesEnum.JWT, update);
+        this.put('/', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM, accessRolesEnum.USER], passportStrategiesEnum.JWT, update);
         this.delete('/', [accessRolesEnum.ADMIN], passportStrategiesEnum.JWT, eliminate);
         this.delete('/delete-one/:uid', [accessRolesEnum.ADMIN], passportStrategiesEnum.JWT, eliminateOne);
-        this.delete('/delete-cart-user', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM], passportStrategiesEnum.JWT, eliminateCartUser);
+        this.delete('/delete-cart-user', [accessRolesEnum.ADMIN, accessRolesEnum.PREMIUM, accessRolesEnum.USER], passportStrategiesEnum.JWT, eliminateCartUser);
     }
 }
